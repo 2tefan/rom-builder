@@ -1,4 +1,4 @@
-image: cimg/base:stable-20.04
+image: docker:latest
 
 services:
   - docker:dind
