@@ -1,7 +1,13 @@
-FROM ubuntu:20.04
+ARG LINUX_DISTRO
+ARG LINUX_DISTRO_RELEASE
+
+FROM ${LINUX_DISTRO}:${LINUX_DISTRO_RELEASE}
 ARG HOME_DIR=/root
+ARG ARB_VERSION
 
 ENV DEBIAN_FRONTEND='noninteractive'
+ENV ARB_VERSION=${ARB_VERSION}
+
 RUN apt-get clean && \
     apt-get update && \
     apt-get -y dist-upgrade

@@ -18,6 +18,7 @@ echo '   |\________\   \ \__\ \ \_______\ \__\   \ \__\ \__\ \__\\ \__\/_ //    
 echo '    \|_______|    \|__|  \|_______|\|__|    \|__|\|__|\|__| \|__|__|/        \|__|\|__|\|__|\|__|\|_______|'
 echo '                                                                                                         '
 printf "Using:\n"
+printf "\tARB: %s\n" "$ARB_VERSION"
 printf "\tRepo (%s): %s\n" "$REPO_LOCATION" "$REPO_VERSION"
 printf "\tGit: %s\n" "$GIT_VERSION"
 printf "\tPython2: %s\n" "$PYTHON2_VERSION"

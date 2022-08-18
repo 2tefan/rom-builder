@@ -6,6 +6,9 @@ for arg in "$@"; do
     --push | -p)
         PUSH=YES
         ;;
+    --launch)
+        LAUNCH=YES
+        ;;
     --linux-distro=*)
         LINUX_DISTRO="${arg#*=}"
         ;;
@@ -19,8 +22,10 @@ done
 : "${LINUX_DISTRO:=ubuntu}"
 : "${LINUX_DISTRO_RELEASE:=20.04}"
 : "${BUILDER_VERSION:=$(git describe --dirty)}"
-: "${IMAGE:="${IMAGE_NAME}:${BUILDER_VERSION}-${LINUX_DISTRO}-${LINUX_DISTRO_RELEASE}"}"
+: "${ARB_VERSION:=${BUILDER_VERSION}-${LINUX_DISTRO}-${LINUX_DISTRO_RELEASE}}"
+: "${IMAGE:="${IMAGE_NAME}:${ARB_VERSION}"}"
 : "${PUSH:=NO}"
+: "${LAUNCH:=NO}"
 
 : "${SCRIPT:=$(realpath "$(basename "$0")")}"
 : "${REPO_ROOT:=$(dirname "${SCRIPT}")}"
@@ -33,10 +38,18 @@ for VARIABLE in ${NEW_VARIABLES[@]}; do
     echo "${VARIABLE}=${!VARIABLE}"
 done
 
-docker build "${REPO_ROOT}" -t "${IMAGE}"
+docker build "${REPO_ROOT}" \
+    --build-arg LINUX_DISTRO="${LINUX_DISTRO}" \
+    --build-arg LINUX_DISTRO_RELEASE="${LINUX_DISTRO_RELEASE}" \
+    --build-arg ARB_VERSION="${ARB_VERSION}" \
+    --tag "${IMAGE}"
 
 
 if [ "${PUSH}" = "YES" ]; then
     docker login --username "${DOCKER_USERNAME}" --password "${DOCKER_PASSWORD}"
     docker push "${IMAGE}"
+fi
+
+if [ "${LAUNCH}" = "YES" ]; then
+    docker run --rm -it "${IMAGE}"
 fi
