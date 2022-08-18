@@ -8,8 +8,12 @@ for arg in "$@"; do
         ;;
     --launch)
         LAUNCH=YES
+        ;;
+    --launch-guess-settings)
+        LAUNCH=YES
         : "${GIT_EMAIL:=$(git config user.email)}"
         : "${GIT_USERNAME:=$(git config user.name)}"
+        : "${EDITOR:=$(git config core.editor)}"
         ;;
     --linux-distro=*)
         LINUX_DISTRO="${arg#*=}"
@@ -57,5 +61,6 @@ if [ "${LAUNCH}" = "YES" ]; then
                 -it \
                 -e "GIT_EMAIL=${GIT_EMAIL}" \
                 -e "GIT_USERNAME=${GIT_USERNAME}" \
+                -e "EDITOR=${EDITOR}" \
                 "${IMAGE}"
 fi

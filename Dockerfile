@@ -56,6 +56,11 @@ RUN mkdir mkdir -p ~/bin &&\
     } >> ${HOME_DIR}/.profile
 ENV PATH=~/bin:$PATH
 
+RUN apt-get update && \
+    apt-get install -y \
+        nano \
+        neovim
+
 WORKDIR $HOME_DIR
 
 ADD init.sh $HOME_DIR/init.sh
