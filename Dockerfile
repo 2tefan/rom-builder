@@ -61,6 +61,9 @@ RUN apt-get update && \
         nano \
         neovim
 
+RUN ccache -M 100G
+ENV USE_CCACHE=1
+
 WORKDIR $HOME_DIR
 
 ADD init.sh $HOME_DIR/init.sh
