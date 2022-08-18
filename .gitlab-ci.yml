@@ -6,4 +6,6 @@ services:
 build:
   stage: build
   script:
+    - apk update
+    - apk add bash git
     - bash build.sh
