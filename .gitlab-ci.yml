@@ -1,0 +1,9 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+build:
+  stage: build
+  script:
+    - bash build.sh
