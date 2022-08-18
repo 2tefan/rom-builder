@@ -6,4 +6,4 @@ services:
 build:
   stage: build
   script:
-    - bash build.sh
+    - sh build.sh

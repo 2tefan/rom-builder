@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/env sh
 
 VARIABLES_BEFORE=$(compgen -v)
 for arg in "$@"; do
