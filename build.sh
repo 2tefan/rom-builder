@@ -8,6 +8,8 @@ for arg in "$@"; do
         ;;
     --launch)
         LAUNCH=YES
+        : "${GIT_EMAIL:=$(git config user.email)}"
+        : "${GIT_USERNAME:=$(git config user.name)}"
         ;;
     --linux-distro=*)
         LINUX_DISTRO="${arg#*=}"
@@ -51,5 +53,9 @@ if [ "${PUSH}" = "YES" ]; then
 fi
 
 if [ "${LAUNCH}" = "YES" ]; then
-    docker run --rm -it "${IMAGE}"
+    docker run --rm \
+                -it \
+                -e "GIT_EMAIL=${GIT_EMAIL}" \
+                -e "GIT_USERNAME=${GIT_USERNAME}" \
+                "${IMAGE}"
 fi

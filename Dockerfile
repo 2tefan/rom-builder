@@ -3,10 +3,8 @@ ARG LINUX_DISTRO_RELEASE
 
 FROM ${LINUX_DISTRO}:${LINUX_DISTRO_RELEASE}
 ARG HOME_DIR=/root
-ARG ARB_VERSION
 
 ENV DEBIAN_FRONTEND='noninteractive'
-ENV ARB_VERSION=${ARB_VERSION}
 
 RUN apt-get clean && \
     apt-get update && \
@@ -58,7 +56,12 @@ RUN mkdir mkdir -p ~/bin &&\
     } >> ${HOME_DIR}/.profile
 ENV PATH=~/bin:$PATH
 
+WORKDIR $HOME_DIR
+
 ADD init.sh $HOME_DIR/init.sh
 RUN echo "./init.sh" >> $HOME_DIR/.bashrc
-WORKDIR $HOME_DIR
+
+ARG ARB_VERSION
+ENV ARB_VERSION=${ARB_VERSION}
+
 ENTRYPOINT ["/bin/bash"]
