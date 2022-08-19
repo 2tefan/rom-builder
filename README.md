@@ -18,7 +18,7 @@ you came to the right place.
 
 First of all as this is a Docker Image, make sure you have installed [Docker](https://docs.docker.com/get-docker/) first.
 
-Then make sure you find a directory in which all the Android source files will be downloaded to. Don't worry, you can change it later on, but keep in mind that the sources are around 200 GB big. Another thing to take into consideration is the type of storage medium. A fast SSD will lead to faster build times than a old and rusty HDD. (It is also possible to use [Docker Volumes](https://docs.docker.com/storage/volumes/) if you want to.)
+Then make sure you find a directory in which all the Android source files will be downloaded to. Don't worry, you can change it later on, but keep in mind that the sources are up to 200 GB big. Another thing to take into consideration is the type of storage medium. A fast SSD will lead to faster build times than a old and rusty HDD. (It is also possible to use [Docker Volumes](https://docs.docker.com/storage/volumes/) if you want to.)
 
 If you have made up your mind, all that is left do to is to start up the Docker container:
 ```sh
