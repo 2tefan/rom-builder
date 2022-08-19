@@ -6,6 +6,7 @@ cd "${REPO_ROOT}" || exit
 
 : "${GIT_BRANCH:=$(git rev-parse --abbrev-ref HEAD)}"
 : "${GIT_BRANCH_TYPE:=$(echo "${GIT_BRANCH}" | awk -F '/' '{ print $1 }')}"
+echo "${GIT_BRANCH_TYPE}"
 
 : "${CURRENT_COMMIT:=$(git rev-parse HEAD)}"
 
