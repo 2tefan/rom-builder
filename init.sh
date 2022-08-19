@@ -20,6 +20,42 @@ function env_exists_or_prompt {
     fi
 }
 
+function check_version {
+    if echo "${ARB_VERSION}" | grep -q ".*alpha-dev.*"; then
+        echo '                ________  _______   ___      ___ '
+        echo '               |\   ___ \|\  ___ \ |\  \    /  /|'
+        echo '               \ \  \_|\ \ \   __/|\ \  \  /  / /'
+        echo '                \ \  \ \\ \ \  \_|/_\ \  \/  / / '
+        echo '                 \ \  \_\\ \ \  \_|\ \ \    / /  '
+        echo '                  \ \_______\ \_______\ \__/ /   '
+        echo '                   \|_______|\|_______|\|__|/    '
+        echo ''
+        echo 'This is a development release. This means that some features might not work or change in the next development release.'
+        echo 'Proceed with care! [Not recommended]'
+    elif echo "${ARB_VERSION}" | grep -q ".*alpha.*"; then
+        echo '                ________  ___       ________  ___  ___  ________     '
+        echo '               |\   __  \|\  \     |\   __  \|\  \|\  \|\   __  \    '
+        echo '               \ \  \|\  \ \  \    \ \  \|\  \ \  \\\  \ \  \|\  \   '
+        echo '                \ \   __  \ \  \    \ \   ____\ \   __  \ \   __  \  '
+        echo '                 \ \  \ \  \ \  \____\ \  \___|\ \  \ \  \ \  \ \  \ '
+        echo '                  \ \__\ \__\ \_______\ \__\    \ \__\ \__\ \__\ \__\'
+        echo '                   \|__|\|__|\|_______|\|__|     \|__|\|__|\|__|\|__|'
+        echo ''
+        echo 'This is a alpha release. This means that some features might not work but most of them should.'
+        echo 'Proceed with care!'
+    elif echo "${ARB_VERSION}" | grep -q ".*beta.*"; then
+        echo '                ________  _______  _________  ________     '
+        echo '               |\   __  \|\  ___ \|\___   ___\\   __  \    '
+        echo '               \ \  \|\ /\ \   __/\|___ \  \_\ \  \|\  \   '
+        echo '                \ \   __  \ \  \_|/__  \ \  \ \ \   __  \  '
+        echo '                 \ \  \|\  \ \  \_|\ \  \ \  \ \ \  \ \  \ '
+        echo '                  \ \_______\ \_______\  \ \__\ \ \__\ \__\'
+        echo '                   \|_______|\|_______|   \|__|  \|__|\|__|'
+        echo ''
+        echo 'This is a beta release. This should be pretty stable, but always except the worst'
+    fi
+}
+
 # ---- </functions> ----
 
 printf "Hi, welcome to\n"
@@ -31,7 +67,8 @@ echo '|__|//  / /    \ \  \ \ \  \_|/_\ \   __\\ \   __  \ \  \\ \  \    /  //  
 echo '    /  /_/__    \ \  \ \ \  \_|\ \ \  \_| \ \  \ \  \ \  \\ \  \  /  //    \ \  \ \  \ \  \\  \\ \  \|\  \ '
 echo '   |\________\   \ \__\ \ \_______\ \__\   \ \__\ \__\ \__\\ \__\/_ //      \ \__\ \__\ \__\\ _\\ \_______\'
 echo '    \|_______|    \|__|  \|_______|\|__|    \|__|\|__|\|__| \|__|__|/        \|__|\|__|\|__|\|__|\|_______|'
-echo '                                                                                                         '
+echo ''
+check_version
 printf "Using:\n"
 printf "\tARB: %s\n" "$ARB_VERSION"
 printf "\tRepo (%s): %s\n" "$REPO_LOCATION" "$REPO_VERSION"
