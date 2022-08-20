@@ -6,7 +6,12 @@ cd "${REPO_ROOT}" || exit
 
 if [[ -v CI ]]; then
     if [[ -v GITLAB_CI ]]; then
-        : "${GIT_BRANCH:=${CI_COMMIT_BRANCH}}"
+        if [[ -v CI_COMMIT_BRANCH ]]; then
+            : "${GIT_BRANCH:=${CI_COMMIT_BRANCH}}"
+        else
+            # This is properly a tag commit, so just assume that this is the main branch
+            : "${GIT_BRANCH:=main}"
+        fi
     else
         echo "CI not supported"
         exit
