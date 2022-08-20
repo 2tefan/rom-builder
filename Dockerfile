@@ -1,7 +1,11 @@
-FROM ubuntu:20.04
+ARG LINUX_DISTRO
+ARG LINUX_DISTRO_RELEASE
+
+FROM ${LINUX_DISTRO}:${LINUX_DISTRO_RELEASE}
 ARG HOME_DIR=/root
 
 ENV DEBIAN_FRONTEND='noninteractive'
+
 RUN apt-get clean && \
     apt-get update && \
     apt-get -y dist-upgrade
@@ -52,7 +56,20 @@ RUN mkdir mkdir -p ~/bin &&\
     } >> ${HOME_DIR}/.profile
 ENV PATH=~/bin:$PATH
 
+RUN apt-get update && \
+    apt-get install -y \
+        nano \
+        neovim
+
+RUN ccache -M 100G
+ENV USE_CCACHE=1
+
+WORKDIR $HOME_DIR
+
 ADD init.sh $HOME_DIR/init.sh
 RUN echo "./init.sh" >> $HOME_DIR/.bashrc
-WORKDIR $HOME_DIR
+
+ARG ARB_VERSION
+ENV ARB_VERSION=${ARB_VERSION}
+
 ENTRYPOINT ["/bin/bash"]
