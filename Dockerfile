@@ -49,10 +49,10 @@ RUN mkdir mkdir -p ~/bin &&\
     curl https://storage.googleapis.com/git-repo-downloads/repo >~/bin/repo && \
     chmod a+x ~/bin/repo && \
     echo { \
-        "# set PATH so it includes user's private bin if it exists" \
-        "if [ -d \"$HOME/bin\" ] ; then" \
-        "    PATH=\"$HOME/bin:$PATH\"" \
-        "fi" \
+        "# set PATH so it includes user's private bin if it exists\n" \
+        "if [ -d \"$HOME/bin\" ] ; then\n" \
+        "    PATH=\"$HOME/bin:$PATH\"\n" \
+        "fi\n" \
     } >> ${HOME_DIR}/.profile
 ENV PATH=~/bin:$PATH
 
