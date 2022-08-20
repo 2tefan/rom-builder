@@ -4,7 +4,17 @@ set -eu
 
 cd "${REPO_ROOT}" || exit
 
-: "${GIT_BRANCH:=$(git rev-parse --abbrev-ref HEAD)}"
+if [[ -v CI ]]; then
+    if [[ -v GITLAB_CI ]]; then
+        : "${GIT_BRANCH:=${CI_COMMIT_BRANCH}}"
+    else
+        echo "CI not supported"
+        exit
+    fi
+else
+    : "${GIT_BRANCH:=$(git rev-parse --abbrev-ref HEAD)}"
+fi
+
 : "${GIT_BRANCH_TYPE:=$(echo "${GIT_BRANCH}" | awk -F '/' '{ print $1 }')}"
 echo "${GIT_BRANCH_TYPE}"
 
