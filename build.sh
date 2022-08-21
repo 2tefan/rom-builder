@@ -42,7 +42,10 @@ source "${REPO_ROOT}/versioning.sh"
 : "${LINUX_DISTRO_RELEASE:=20.04}"
 : "${ARB_VERSION:=${BUILDER_VERSION}-${LINUX_DISTRO}-${LINUX_DISTRO_RELEASE}}"
 : "${IMAGE:="${IMAGE_NAME}:${ARB_VERSION}"}"
-
+if [[ -v BUILDER_VERSION_SHORTEN ]]; then
+    : "${ARB_VERSION_SHORTEN:=${BUILDER_VERSION_SHORTEN}-${LINUX_DISTRO}-${LINUX_DISTRO_RELEASE}}"
+    : "${IMAGE_SHORTEN:="${IMAGE_NAME}:${ARB_VERSION_SHORTEN}"}"
+fi
 VARIABLES_AFTER=$(compgen -v)
 
 NEW_VARIABLES=$(echo "${VARIABLES_BEFORE[@]}" "${VARIABLES_AFTER[@]}" | tr ' ' '\n' | sort | uniq -u | grep -v 'VARIABLES_BEFORE' | grep -v 'VARIABLES_AFTER')
@@ -60,6 +63,11 @@ docker build "${REPO_ROOT}" \
 if [ "${PUSH}" = "YES" ]; then
     docker login --username "${DOCKER_USERNAME}" --password "${DOCKER_PASSWORD}"
     docker push "${IMAGE}"
+
+    if [[ -v BUILDER_VERSION_SHORTEN ]]; then
+        docker tag "${IMAGE}" "${IMAGE_SHORTEN}"
+        docker push "${IMAGE_SHORTEN}"
+    fi
 fi
 
 if [ "${LAUNCH}" = "YES" ]; then

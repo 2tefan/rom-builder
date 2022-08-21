@@ -41,12 +41,15 @@ main)
     if [ "${COUNT_SINCE_TAG}" -eq 0 ]; then
         # No tags inbetween -> so this is the new version
         : "${BUILDER_VERSION:=${LAST_VERSION}}"
+        : "${BUILDER_VERSION_SHORTEN:=stable}"
     else
         : "${BUILDER_VERSION:=${NEXT_VERSION}-beta-${COUNT_SINCE_TAG}}"
+        : "${BUILDER_VERSION_SHORTEN:=beta}"
     fi
     ;;
 develop)
     : "${BUILDER_VERSION:=${NEXT_VERSION}-alpha-${COUNT_SINCE_TAG}}"
+    : "${BUILDER_VERSION_SHORTEN:=alpha}"
     ;;
 feature)
     : "${GIT_FEATURE_BRANCH_NAME:=$(echo "${GIT_BRANCH}" | awk -F '/' '{ print $2 }')}"
