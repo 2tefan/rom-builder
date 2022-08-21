@@ -8,8 +8,16 @@ REPO_VERSION=$(repo --version | grep version | awk '{print $4}')
 GIT_VERSION=$(git --version | awk '{print $3}')
 PYTHON2_VERSION=$(python2 --version 2>&1 | awk '{print $2}')
 PYTHON3_VERSION=$(python3 --version | awk '{print $2}')
+CCACHE_VERSION=$(ccache --version | head -n 1 | awk '{print $3}')
+
+: "${CCACHE_SIZE:=100G}"
 
 # ---- <functions> ----
+
+function setup_ccache() {
+    ccache -M "${CCACHE_SIZE}" > /dev/null
+    REAL_CCACHE_SIZE=$(ccache -s | grep "max cache size" | awk '{print $4 $5}')
+}
 
 function env_exists_or_prompt {
     if [ -z "${!1:-}" ]; then
@@ -69,12 +77,14 @@ echo '   |\________\   \ \__\ \ \_______\ \__\   \ \__\ \__\ \__\\ \__\/_ //    
 echo '    \|_______|    \|__|  \|_______|\|__|    \|__|\|__|\|__| \|__|__|/        \|__|\|__|\|__|\|__|\|_______|'
 echo ''
 check_version
+setup_ccache
 printf "Using:\n"
 printf "\tARB: %s\n" "$ARB_VERSION"
 printf "\tRepo (%s): %s\n" "$REPO_LOCATION" "$REPO_VERSION"
 printf "\tGit: %s\n" "$GIT_VERSION"
 printf "\tPython2: %s\n" "$PYTHON2_VERSION"
 printf "\tPython3: %s\n" "$PYTHON3_VERSION"
+printf "\tCCache (Set: %s | Real: %s): %s\n" "$CCACHE_SIZE" "$REAL_CCACHE_SIZE" "$CCACHE_VERSION"
 echo
 env_exists_or_prompt "GIT_EMAIL" "git email"
 env_exists_or_prompt "GIT_USERNAME" "git username"

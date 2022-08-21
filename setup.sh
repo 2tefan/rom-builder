@@ -20,6 +20,3 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi" >> /etc/bash.bashrc
-
-
-ccache -M 100G
