@@ -22,6 +22,6 @@ Then make sure you find a directory in which all the Android source files will b
 
 If you have made up your mind, all that is left do to is to start up the Docker container:
 ```sh
-docker run -v $(pwd):/root/project -e "GIT_EMAIL=$(git config user.email)" -e "GIT_USERNAME=$(git config user.name)" -e "EDITOR=nvim" -it 2tefan/android-rom-builder:v0.0.1-4-gf4dbc61-ubuntu-20.04
+docker run -v $(pwd):/root/project -it 2tefan/android-rom-builder:stable-ubuntu-20.04
 ```
 
