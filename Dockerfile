@@ -54,14 +54,14 @@ RUN apt-get update && \
         nano \
         neovim
 
-ADD arb.sh $HOME_DIR/.arb
-ADD setup.sh $HOME_DIR/setup.sh
+ADD setup/arb.sh $HOME_DIR/.arb
+ADD build/setup.sh $HOME_DIR/setup.sh
 RUN $HOME_DIR/setup.sh
 RUN rm $HOME_DIR/setup.sh
 
 WORKDIR $HOME_DIR
 
-ADD init.sh $HOME_DIR/init.sh
+ADD setup/init.sh $HOME_DIR/init.sh
 RUN echo "./init.sh" >> $HOME_DIR/.bashrc
 
 ARG ARB_VERSION
