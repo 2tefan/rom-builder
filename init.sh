@@ -80,7 +80,7 @@ env_exists_or_prompt "GIT_EMAIL" "git email"
 env_exists_or_prompt "GIT_USERNAME" "git username"
 git config --global user.email "${GIT_EMAIL}"
 git config --global user.name "${GIT_USERNAME}"
-[ -n "${EDITOR}" ] && git config --global core.editor "${EDITOR}"
+[ -v EDITOR ] && git config --global core.editor "${EDITOR}"
 echo
 echo "Git config:"
 git config --global -l | sed "s/^/$(printf "\t")/g"
