@@ -45,28 +45,23 @@ RUN apt-get update && \
         zip \
         zlib1g-dev
 
-RUN mkdir mkdir -p ~/bin &&\
-    curl https://storage.googleapis.com/git-repo-downloads/repo >~/bin/repo && \
-    chmod a+x ~/bin/repo && \
-    echo { \
-        "# set PATH so it includes user's private bin if it exists\n" \
-        "if [ -d \"$HOME/bin\" ] ; then\n" \
-        "    PATH=\"$HOME/bin:$PATH\"\n" \
-        "fi\n" \
-    } >> ${HOME_DIR}/.profile
-ENV PATH=~/bin:$PATH
+RUN apt-get update && \
+    apt-get install -y \
+        android-sdk-platform-tools
 
 RUN apt-get update && \
     apt-get install -y \
         nano \
         neovim
 
-RUN ccache -M 100G
-ENV USE_CCACHE=1
+ADD setup/arb.sh $HOME_DIR/.arb
+ADD build/setup.sh $HOME_DIR/setup.sh
+RUN $HOME_DIR/setup.sh
+RUN rm $HOME_DIR/setup.sh
 
 WORKDIR $HOME_DIR
 
-ADD init.sh $HOME_DIR/init.sh
+ADD setup/init.sh $HOME_DIR/init.sh
 RUN echo "./init.sh" >> $HOME_DIR/.bashrc
 
 ARG ARB_VERSION

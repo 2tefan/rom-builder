@@ -35,7 +35,7 @@ done
 : "${REPO_ROOT:=$(dirname "${SCRIPT}")}"
 : "${DOCKERFILE:=$(realpath "${REPO_ROOT}/Dockerfile")}"
 
-source "${REPO_ROOT}/versioning.sh"
+source "${REPO_ROOT}/build/versioning.sh"
 
 : "${IMAGE_NAME:=2tefan/android-rom-builder}"
 : "${LINUX_DISTRO:=ubuntu}"
