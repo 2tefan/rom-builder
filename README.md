@@ -25,3 +25,7 @@ If you have made up your mind, all that is left do to is to start up the Docker 
 docker run -v $(pwd):/root/project -it 2tefan/android-rom-builder:stable-ubuntu-20.04
 ```
 
+It is also possible to mount the ccache folder, otherwise the cache is NOT saved after you remove the Docker container.
+```sh
+docker run -v $(pwd):/root/project -v "$XDG_DATA_HOME/ccache":/root/.ccache -v "$XDG_CONFIG_HOME/AndroidCerts":/root/.android-certs -e "GIT_EMAIL=$(git config user.email)" -e "GIT_USERNAME=$(git config user.name)" -e "EDITOR=nvim" --cpus="8" --name arb -it --rm 2tefan/android-rom-builder:stable-ubuntu-20.04
+```
